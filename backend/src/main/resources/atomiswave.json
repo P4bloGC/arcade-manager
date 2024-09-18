@@ -1,0 +1,13 @@
+{
+    "name": "atomiswave",
+    "idChat": "5336478163",
+    "token": "7233372087:AAEKqWkPFP4RaPAi1AcAUzxr7iGACAjtljY",
+    "inParts": true,
+    "compress": true,
+    "extension": ".zip;z*",
+    "apiUpdates": "https://api.telegram.org/bot7233372087:AAEKqWkPFP4RaPAi1AcAUzxr7iGACAjtljY/getUpdates",
+    "roms": "roms/atomiswave.json",
+    "videos": "videos/atomiswave.json",
+    "logos": "logos/atomiswave.json",
+    "offset": 0
+}

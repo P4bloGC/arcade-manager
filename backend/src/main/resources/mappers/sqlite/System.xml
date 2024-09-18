@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arcade.manager.mappers.SystemMapper">
+
+    <resultMap id="BaseResultMap" type="com.arcade.manager.models.System">
+        <id column="id" property="id" />
+        <result column="system_label" property="systemLabel" />
+        <result column="system_name" property="systemName" />
+        <result column="work_path" property="workPath" />
+        <result column="rom_path" property="romPath" />
+        <result column="video_path" property="videoPath" />
+        <result column="logo_path" property="logoPath" />
+        <result column="cfg_path" property="cfgPath" />
+        <result column="executable_path" property="executablePath" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, system_label, system_name, work_path, rom_path, video_path, logo_path, cfg_path, executable_path
+    </sql>
+
+    <select id="getAllSystems" resultMap="BaseResultMap">
+        SELECT *
+        FROM system
+        ORDER BY system_label ASC
+    </select>
+
+    <select id="getSystemById" parameterType="int" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM system
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertSystem" parameterType="com.arcade.manager.models.System" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO system (system_label, system_name, work_path, rom_path, video_path, logo_path, cfg_path, executable_path)
+        VALUES (#{systemLabel}, #{systemName}, #{workPath}, #{romPath}, #{videoPath}, #{logoPath}, #{cfgPath}, #{executablePath})
+    </insert>
+
+    <update id="updateSystem" parameterType="com.arcade.manager.models.System">
+        UPDATE system
+        SET system_label = #{systemLabel}, system_name = #{systemName}, work_path = #{workPath}, rom_path = #{romPath},
+        video_path = #{videoPath}, logo_path = #{logoPath}, cfg_path = #{cfgPath}, executable_path = #{executablePath}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteSystem" parameterType="int">
+        DELETE FROM system
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

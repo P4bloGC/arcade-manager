@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arcade.manager.mappers.DocumentMapper">
+
+    <resultMap id="BaseResultMap" type="com.arcade.manager.models.Document">
+        <id column="id" property="id" />
+        <result column="id_system" property="idSystem" />
+        <result column="type" property="type" />
+        <result column="file_name" property="fileName" />
+        <result column="mime_type" property="mimeType" />
+        <result column="file_id" property="fileId" />
+        <result column="file_unique_id" property="fileUniqueId" />
+        <result column="file_size" property="fileSize" />
+        <result column="file_path" property="filePath" />
+        <result column="file_url" property="fileUrl" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, file_name, mime_type, file_id, file_unique_id, file_size, file_path, file_url
+    </sql>
+
+    <select id="getAllDocument" resultMap="BaseResultMap">
+        SELECT
+        FROM document
+        ORDER BY file_name ASC
+    </select>
+
+    <select id="getDocumentById" parameterType="int" resultMap="BaseResultMap">
+        SELECT *
+        FROM document
+        WHERE id = #{id}
+    </select>
+
+    <select id="getDocumentByType" resultMap="BaseResultMap">
+        SELECT *
+        FROM document
+        WHERE id_system = #{idSystem} AND type = #{type}
+    </select>
+
+    <insert id="insertDocument" parameterType="com.arcade.manager.models.Document" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO document (file_name, mime_type, file_id, file_unique_id, file_size, file_path, file_url, id_system, type)
+        VALUES (#{fileName}, #{mimeType}, #{fileId}, #{fileUniqueId}, #{fileSize}, #{filePath}, #{fileUrl}, #{idSystem}, #{type})
+    </insert>
+
+    <update id="updateDocument" parameterType="com.arcade.manager.models.Document">
+        UPDATE document
+        SET file_name = #{fileName}, mime_type = #{mimeType}, file_id = #{fileId}, file_unique_id = #{fileUniqueId},
+        file_size = #{fileSize}, file_path = #{filePath}, file_url = #{fileUrl}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteDocument" parameterType="int">
+        DELETE FROM document
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

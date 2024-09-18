@@ -1,0 +1,13 @@
+{
+    "name": "naomi",
+    "idChat": "5336478163",
+    "token": "7236271850:AAF-VYjN_sBM0cn4WJNFWbWlDEJO5cwU2vI",
+    "inParts": true,
+    "compress": true,
+    "extension": ".zip;z*",
+    "apiUpdates": "https://api.telegram.org/bot7236271850:AAF-VYjN_sBM0cn4WJNFWbWlDEJO5cwU2vI/getUpdates",
+    "roms": "roms/naomi.json",
+    "videos": "videos/naomi.json",
+    "logos": "logos/naomi.json",
+    "offset": 0
+}

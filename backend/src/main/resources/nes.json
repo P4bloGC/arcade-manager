@@ -1,0 +1,11 @@
+{
+    "name": "nes",
+    "idChat": "5336478163",
+    "token": "7459220581:AAFmHu5e8Xofvc_qnOuX_emc7Q81KRKD8fg",
+    "inParts": false,
+    "compress": false,
+    "extension": ".nes",
+    "apiUpdates": "https://api.telegram.org/bot7459220581:AAFmHu5e8Xofvc_qnOuX_emc7Q81KRKD8fg/getUpdates",
+    "roms": "roms/nes.json",
+    "offset": 676785891
+}

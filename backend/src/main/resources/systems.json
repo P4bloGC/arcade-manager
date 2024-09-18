@@ -1,0 +1,52 @@
+[
+  {
+    "system_label": "Atomiswave",
+    "system_name": "atomiswave",
+    "work_path": "/systems/Atomiswave",
+    "rom_path": "/systems/Atomiswave/roms",
+    "video_path": "/systems/Atomiswave/videos",
+    "logo_path": "/systems/Atomiswave/logos",
+    "cfg_path": "/emulators/Sammy Atomiswave.cfg",
+    "executable_path": "/emulators/flycast/flycast.exe"
+  },
+  {
+    "system_label": "Sega Model 2",
+    "system_name": "model2",
+    "work_path": "/systems/Model2",
+    "rom_path": "/systems/Model2/roms",
+    "video_path": "/systems/Model2/videos",
+    "logo_path": "/systems/Model2/logos",
+    "cfg_path": "/emulators/Sega Model 2.cfg",
+    "executable_path": "/emulators/Model2/emulator_multicpu.exe"
+  },
+  {
+    "system_label": "Sega Model 3",
+    "system_name": "model3",
+    "work_path": "/systems/Model3",
+    "rom_path": "/systems/Model3/roms",
+    "video_path": "/systems/Model3/videos",
+    "logo_path": "/systems/Model3/logos",
+    "cfg_path": "/emulators/Sega Model 3.cfg",
+    "executable_path": "/emulators/Model3/Supermodel.exe"
+  },
+  {
+    "system_label": "Sega Naomi",
+    "system_name": "naomi",
+    "work_path": "/systems/Naomi",
+    "rom_path": "/systems/Naomi/roms",
+    "video_path": "/systems/Naomi/videos",
+    "logo_path": "/systems/Naomi/logos",
+    "cfg_path": "/emulators/Sega Naomi.cfg",
+    "executable_path": "/emulators/flycast/flycast.exe"
+  },
+  {
+    "system_label": "MAME",
+    "system_name": "arcade",
+    "work_path": "/systems/Arcade",
+    "rom_path": "/systems/Arcade/roms",
+    "video_path": "/systems/Arcade/videos",
+    "logo_path": "/systems/Arcade/logo",
+    "cfg_path": "/emulators/Arcade.cfg",
+    "executable_path": "/emulators/groovymame/mame.exe"
+  }
+]

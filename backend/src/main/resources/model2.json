@@ -1,0 +1,13 @@
+{
+    "name": "model2",
+    "idChat": null,
+    "token": null,
+    "inParts": true,
+    "compress": true,
+    "extension": null,
+    "apiUpdates": null,
+    "roms": "roms/model2.json",
+    "videos": "videos/model2.json",
+    "logos": "logos/model2.json",
+    "offset": null
+}
