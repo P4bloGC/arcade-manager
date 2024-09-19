@@ -1,0 +1,46 @@
+<div *ngIf="systemInfo">
+
+    <div class="page-header">
+        <h1 id="navbars">Navbars</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Gráficos</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ systemInfo.Graphics.GraphicsCardName }}</h6>
+                    <p class="card-text">Graphics Card Vendor: {{ systemInfo.Graphics.GraphicsCardVendor }}</p>
+                    <p class="card-text">Graphics Card VRAM: {{ systemInfo.Graphics.GraphicsCardVRAM }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">CPU</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ systemInfo.CPU.ProcessorName }}</h6>
+                    <p class="card-text">Number of Cores: {{ systemInfo.CPU.NumberOfCores }}</p>
+                    <p class="card-text">CPU Load: {{ systemInfo.CPU.CpuLoad }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div>
+        <h2>Disk</h2>
+        <p>Total Space: {{ systemInfo.Disk['/'].TotalSpace }}</p>
+        <p>Used Space: {{ systemInfo.Disk['/'].UsedSpace }}</p>
+        <p>Free Space: {{ systemInfo.Disk['/'].FreeSpace }}</p>
+    </div>
+    <div>
+        <h2>RAM</h2>
+        <p>Used Memory: {{ systemInfo.RAM.UsedMemory }}</p>
+        <p>Total Memory: {{ systemInfo.RAM.TotalMemory }}</p>
+        <p>Free Memory: {{ systemInfo.RAM.FreeMemory }}</p>
+    </div>
+</div>

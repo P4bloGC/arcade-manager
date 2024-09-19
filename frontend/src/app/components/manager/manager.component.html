@@ -1,0 +1,153 @@
+<div class="row">
+    <div class="col-md-3">
+        <form>
+            <select class="form-select" #systems (change)="getSystemGameList(systems.value)">
+                <option value="0">Selecciona una opción...</option>
+                <option *ngFor="let s of systemList" [value]="s.id">{{ s.system_label }}</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary" (click)="showDownloadOptions()">Obtener Romset</button>
+            <button type="button" class="btn btn-success" (click)="openModal()">Subir Archivos</button>
+        </div>
+    </div>
+
+    <div class="col-md-12 row">
+
+        <div class="col-md-8" *ngIf="gameList != null">
+            <div class="card bg-light">
+                <div class="card-header">Listado de juegos</div>
+                <div class="card-body">
+                   
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr class="table-active">
+                                <th scope="col">#</th>
+                                <th scope="col">Juego</th>
+                                <th scope="col">ROM</th>
+                                <th scope="col">Tamaño</th>
+                                <th scope="col">Video</th>
+                                <th scope="col">Logo</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let game of gameList; let i = index"
+                                (click)="getGameMultimedia(game.videoPath, game.logoPath, game.romName, game.desc)">
+                                <th scope="row">{{ i + 1 }}</th>
+                                <td>{{ game.gameName }}</td>
+                                <td>{{ game.romName }}</td>
+                                <td>{{ game.romSize }}</td>
+                                <td>
+                                    <i *ngIf="game.videoPath" class="fa-solid fa-circle-check" style="color: green;"></i>
+                                    <i *ngIf="!game.videoPath" class="fa-solid fa-circle-xmark" style="color: red;"></i>
+                                </td>
+                                <td>
+                                    <i *ngIf="game.logoPath" class="fa-solid fa-circle-check" style="color: green;"></i>
+                                    <i *ngIf="!game.logoPath" class="fa-solid fa-circle-xmark" style="color: red;"></i>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm" (click)="deleteGame(game.videoPath, game.logoPath, game.romPath)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4" *ngIf="viewVisor && gameList != null">
+
+            <div class="card bg-light mb-4">
+                <div class="card-body">
+                    <h4 *ngIf="!imageSrc && !videoSrc" class="card-title">LOGO</h4>
+
+                    <div *ngIf="imageSrc" class="img-container mb-4">
+                        <img [src]="imageSrc" alt="Imagen de juego" class="img-fluid">
+                    </div>
+
+                    <div *ngIf="videoSrc" class="video-container">
+                        <video [src]="videoSrc" controls autoplay class="video-fluid" width="100%"></video>
+                    </div>
+                </div>
+                <form *ngIf="!imageSrc">
+                    <div>
+                        <label for="formFile" class="form-label mt-4">Subir logo</label>
+                        <input class="form-control" type="file" id="image" (change)="onFileChanged($event, 'logo')">
+                    </div>
+                </form>
+                <form *ngIf="!videoSrc">
+                    <div>
+                        <label for="formFile" class="form-label mt-4">Subir video</label>
+                        <input class="form-control" type="file" id="video" (change)="onFileChanged($event, 'video')">
+                    </div>
+                </form>
+            </div>
+
+            <div class="card bg-light">
+                <div class="card-body">
+                    <p class="mb-0">{{ gameDesc}}</p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-12" *ngIf="gameList == null">
+            <div class="alert alert-dismissible alert-light">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <h4 class="alert-heading">Oops! <i class="fa-regular fa-face-sad-cry"></i></h4>
+                <p class="mb-0">
+                    No se encontraron juegos en tu sistema. Puedes descargar un ROMset desde el botón Descargar.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal" id="fileUploadModal" #fileUploadModal>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Subir archivos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="closeModal()">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <select class="form-select mb-4" #fileType (change)="setTypeUpload(fileType.value)">
+                        <option value="">Seleccione un tipo de subida..</option>
+                        <option value="rom">Roms</option>
+                        <option value="video">Videos</option>
+                        <option value="logo">Logos</option>
+                    </select>
+
+                    <div class="drop-zone" (click)="openFileSelector()" (dragover)="onDragOver($event)"
+                        (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" *ngIf="typeUpload != ''">
+                        <p *ngIf="files.length === 0">Arrastra y suelta tus archivos aquí, o haz click para seleccionar.
+                        </p>
+                        <div *ngIf="files.length > 0">
+                            <p>Archivos seleccionados:</p>
+                            <ul>
+                                <li *ngFor="let file of files">{{ file.name }}</li>
+                            </ul>
+                        </div>
+                        <input type="file" (change)="onFileSelected($event)" hidden #fileInput multiple>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>

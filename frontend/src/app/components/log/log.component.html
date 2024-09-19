@@ -1,0 +1,12 @@
+<div *ngIf="isLoading">
+  <div class="loading-message">
+    <div class="spinner"></div> 
+    Por favor, espera un momento...
+  </div>
+</div>
+
+<div class="log-container" #logContainer>
+  <ul>
+    <li *ngFor="let log of logs">{{ log }}</li>
+  </ul>
+</div>

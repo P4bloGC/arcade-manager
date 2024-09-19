@@ -1,0 +1,100 @@
+<div class="row">
+
+    <div class="col-md-1 text-inline">
+        <fieldset>
+            <input #fps class="form-control" min="1" max="60" type="number" value="30" (change)="setFpsvalue(fps.value)">
+        </fieldset>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-light" (click)="startRecording()">
+                <i class="fa-solid fa-play"></i> Iniciar grabación
+            </button>
+            
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-8" *ngIf="captureList != null">
+
+        <div class="card bg-light">
+            <div class="card-header">Listado de capturas</div>
+            <div class="card-body">
+               
+                <table class="table table-hover table-light">
+                    <thead>
+                        <tr class="table-active">
+                            <th scope="col">#</th>
+                            <th scope="col">Captura</th>
+                            <th scope="col">Tamaño</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let capture of captureList; let i = index">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>{{ capture.fileName }}</td>
+                            <td>{{ capture.fileSize }}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" (click)="serveCapture(capture.path)">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm" (click)="deleteCapture(capture.path)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card bg-light mb-4">
+            <div class="card-body">
+                <div *ngIf="captureSrc" class="video-container">
+                    <video [src]="captureSrc" controls autoplay class="video-fluid" width="100%"></video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="logModal"  #logModal>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Screen Recorder</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="closeModal()">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div *ngIf="isLoading">
+                    <div class="loading-message">
+                      <div class="spinner"></div> 
+                      Grabando video...
+                    </div>
+                  </div>
+
+                <app-log *ngIf="showLog"></app-log>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="stopRecording()">
+                    <i class="fa-solid fa-stop"></i> Detener grabación
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
