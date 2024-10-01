@@ -3,10 +3,7 @@ package com.arcade.manager.controllers;
 import com.arcade.manager.classes.GameDetail;
 import com.arcade.manager.models.Document;
 import com.arcade.manager.models.System;
-import com.arcade.manager.services.FileService;
-import com.arcade.manager.services.ManagerService;
-import com.arcade.manager.services.TelegramService;
-import com.arcade.manager.services.ZipService;
+import com.arcade.manager.services.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -21,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @RestController
 @Tag(name = "Telegram Controller", description = "Operaciones Relacionadas a la Api de Telegram")
@@ -30,17 +28,24 @@ public class TelegramController {
     private final ZipService zipService;
     private final ManagerService managerService;
     private final FileService fileService;
+    private final SystemService systemService;
 
-    public TelegramController(TelegramService telegramService, ZipService zipService, ManagerService managerService, FileService fileService) {
+    public TelegramController(TelegramService telegramService, ZipService zipService, ManagerService managerService, FileService fileService, SystemService systemService) {
         this.telegramService = telegramService;
         this.zipService = zipService;
         this.managerService = managerService;
         this.fileService = fileService;
+        this.systemService = systemService;
     }
 
     @GetMapping("/test")
     public ResponseEntity<List<Document>> test() throws IOException {
         return ResponseEntity.ok(managerService.test());
+    }
+
+    @PostMapping(value = "/init")
+    public List<Map<String, String>> initSystems(@RequestParam("attractPath") String attractPath) throws IOException {
+        return ResponseEntity.ok(systemService.showCfgFiles(attractPath)).getBody();
     }
 
     @GetMapping("/manager/getSystemGameList/{idSystem}")

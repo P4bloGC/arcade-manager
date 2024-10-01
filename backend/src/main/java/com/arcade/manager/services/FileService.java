@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,6 +33,16 @@ public class FileService {
     public FileService(SimpMessagingTemplate template, SystemMapper systemMapper) {
         this.template = template;
         this.systemMapper = systemMapper;
+    }
+
+    public String readTxtFile(Integer idSystem) throws IOException {
+        try{
+            System system = systemMapper.getSystemById(idSystem);
+            return new String(Files.readAllBytes(Paths.get(system.getCfgPath())));
+        }catch(Exception e){
+            log.error("Error al leer el archivo txt: " + e.getMessage());
+            throw  e;
+        }
     }
 
     public void uploadFile(MultipartFile file, Integer idSystem, String romName, String type) throws IOException {
