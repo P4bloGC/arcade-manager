@@ -11,6 +11,9 @@ export class ManagerService {
 
   constructor(private http: HttpClient) { }
 
+  init(path: string) {
+    return this.http.post(`${this.apiUrl}/init?attractPath=${encodeURIComponent(path)}`, {}, this.getHeader());
+  }
   getAllSystems(){
     return this.http.get<any>(this.apiUrl + "/manager/getAllSystems");
   }
@@ -64,4 +67,5 @@ export class ManagerService {
 
     return httpOptions;
   }
+
 }

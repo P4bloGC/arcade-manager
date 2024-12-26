@@ -31,7 +31,7 @@ import java.util.Map;
 @Log4j
 public class ManagerService {
     private final String tempDir = Paths.get("").toAbsolutePath().getParent().toString() + "/temp";
-    private final String absolutePath = Paths.get("").toAbsolutePath().getParent().toString();
+    //private final String absolutePath = Paths.get("").toAbsolutePath().getParent().toString();
     private final static String socketDestination = "/topic/logs";
     private final ObjectMapper objectMapper;
     private final SystemMapper systemMapper;
@@ -96,9 +96,9 @@ public class ManagerService {
                 String fileSize = fileService.getFileSize(path.toString());
                 String fileNameWithExtension = path.getFileName().toString();
                 String fileNameWithoutExtension = fileService.removeFileExtension(fileNameWithExtension);
-                String videoPath = absolutePath + system.getVideoPath() + "/" + fileNameWithoutExtension + ".mp4";
-                String logoPath = absolutePath + system.getLogoPath() + "/" + fileNameWithoutExtension + ".png";
-                Map<String, String> xmlData = getXmlData(absolutePath + romPath + "/gamelist.xml", "./" + fileNameWithExtension);
+                String videoPath = system.getVideoPath() + "/" + fileNameWithoutExtension + ".mp4";
+                String logoPath = system.getLogoPath() + "/" + fileNameWithoutExtension + ".png";
+                Map<String, String> xmlData = getXmlData(romPath + "/gamelist.xml", "./" + fileNameWithExtension);
 
                 if (!Files.exists(Paths.get(videoPath))) {
                     videoPath = null;

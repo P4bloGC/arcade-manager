@@ -7,7 +7,6 @@
 
     <resultMap id="BaseResultMap" type="com.arcade.manager.models.System">
         <id column="id" property="id" />
-        <result column="system_label" property="systemLabel" />
         <result column="system_name" property="systemName" />
         <result column="work_path" property="workPath" />
         <result column="rom_path" property="romPath" />
@@ -15,10 +14,13 @@
         <result column="logo_path" property="logoPath" />
         <result column="cfg_path" property="cfgPath" />
         <result column="executable_path" property="executablePath" />
+        <result column="rom_ext" property="romExt" />
+        <result column="flyer_path" property="flyerPath" />
+        <result column="marquee_path" property="marqueePath" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, system_label, system_name, work_path, rom_path, video_path, logo_path, cfg_path, executable_path
+        id, system_label, system_name, work_path, rom_path, video_path, logo_path, cfg_path, executable_path, rom_ext, flyer_path, marquee_path
     </sql>
 
     <select id="getAllSystems" resultMap="BaseResultMap">
@@ -35,8 +37,8 @@
     </select>
 
     <insert id="insertSystem" parameterType="com.arcade.manager.models.System" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO system (system_label, system_name, work_path, rom_path, video_path, logo_path, cfg_path, executable_path)
-        VALUES (#{systemLabel}, #{systemName}, #{workPath}, #{romPath}, #{videoPath}, #{logoPath}, #{cfgPath}, #{executablePath})
+        INSERT INTO system (system_name, work_path, rom_path, video_path, logo_path, cfg_path, executable_path, rom_ext, flyer_path, marquee_path)
+        VALUES (#{systemName}, #{workPath}, #{romPath}, #{videoPath}, #{logoPath}, #{cfgPath}, #{executablePath}, #{romExt}, #{flyerPath}, #{marqueePath})
     </insert>
 
     <update id="updateSystem" parameterType="com.arcade.manager.models.System">

@@ -26,8 +26,8 @@ public class SystemService {
         this.systemMapper = systemMapper;
     }
 
-    public List<Map<String, String>> showCfgFiles(String attractPath) throws IOException {
-        List<Map<String, String>> cfgFilesContent = new ArrayList<>();
+    public List<System> getSystemsFromCfgFiles(String attractPath) throws IOException {
+        List<System> systemList = new ArrayList<>();
         String emulatorsPath = attractPath + "/emulators";
 
         try (Stream<Path> cfgFiles = Files.walk(Paths.get(emulatorsPath))
@@ -35,42 +35,46 @@ public class SystemService {
 
             cfgFiles.forEach(path -> {
                 try {
-                    // Lee el contenido del archivo .cfg
+                    // Read the content of the .cfg file
                     List<String> content = Files.readAllLines(path);
 
-                    // Crea un mapa para almacenar la ruta y el contenido
-                    Map<String, String> fileData = new HashMap<>();
-                    fileData.put("cfgPath", path.toString());
-
-                    // Junta el contenido del archivo en una cadena de texto
+                    // Build a string containing the content of the file
                     StringBuilder contentBuilder = new StringBuilder();
                     content.forEach(line -> contentBuilder.append(line).append("\n"));
                     String contentString = contentBuilder.toString();
-                    //fileData.put("content", contentString);
 
-                    fileData.put("system", extractValue(contentString, "system"));
-                    fileData.put("executable", extractValue(contentString, "executable"));
-                    fileData.put("workdir", extractValue(contentString, "workdir"));
-                    fileData.put("rompath", extractValue(contentString, "rompath"));
-                    fileData.put("romext", extractValue(contentString, "romext"));
+                    // Extract data and create a new System object
+                    System system = new System();
+                    system.setCfgPath(path.toString());
+                    system.setSystemName(extractValue(contentString, "system"));
+                    system.setExecutablePath(extractValue(contentString, "executable"));
+                    system.setWorkPath(extractValue(contentString, "workdir"));
+                    system.setRomPath(extractValue(contentString, "rompath"));
+                    system.setRomExt(extractValue(contentString, "romext"));
 
-                    // Extrae las rutas de todos los artworks
+                    // Extract artwork paths
                     Map<String, String> artworkPaths = extractArtworkPaths(contentString);
-                    artworkPaths.forEach(fileData::put);
+                    system.setFlyerPath(artworkPaths.getOrDefault("flyer", ""));
+                    system.setMarqueePath(artworkPaths.getOrDefault("marquee", ""));
+                    system.setLogoPath(artworkPaths.getOrDefault("wheel", ""));
+                    system.setVideoPath(artworkPaths.getOrDefault("snap", ""));
 
-                    // Agrega el mapa a la lista
-                    cfgFilesContent.add(fileData);
+                    this.insertSystem(system);
+
+                    // Add the system to the list
+                    systemList.add(system);
                 } catch (IOException e) {
-                    log.error("Error al leer el archivo " + path + ": " + e.getMessage());
+                    log.error("Error reading file " + path + ": " + e.getMessage());
                 }
             });
         } catch (Exception e) {
-            log.error("Error al leer el directorio: " + e.getMessage());
+            log.error("Error reading directory: " + e.getMessage());
             throw e;
         }
 
-        return cfgFilesContent;
+        return systemList;
     }
+
 
     private String extractValue(String content, String searchValue) {
         String[] lines = content.split("\n");
@@ -79,7 +83,7 @@ public class SystemService {
                 return line.substring(searchValue.length()).trim();
             }
         }
-        return ""; // Retorna una cadena vacía si no se encuentra "system"
+        return "";
     }
 
     private Map<String, String> extractArtworkPaths(String content) {

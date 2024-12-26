@@ -179,7 +179,7 @@ public class FileService {
 
     public List<String> getFileListInDirectory(String dir) {
         List<String> fileList;
-        try (Stream<Path> paths = Files.walk(Paths.get(absolutePath + dir))) {
+        try (Stream<Path> paths = Files.walk(Paths.get(dir))) {
             fileList = paths.filter(Files::isRegularFile)
                     .filter(path -> !path.toString().toLowerCase().endsWith(".xml")) // Ignorar archivos XML
                     .map(Path::toString)

@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 public class System {
 
     private Integer id;
-    @JsonProperty("system_label")
-    private String systemLabel;
 
     @JsonProperty("system_name")
     private String systemName;
@@ -24,10 +22,10 @@ public class System {
     @JsonProperty("rom_path")
     private String romPath;
 
-    @JsonProperty("video_path")
+    @JsonProperty("snap")
     private String videoPath;
 
-    @JsonProperty("logo_path")
+    @JsonProperty("wheel")
     private String logoPath;
 
     @JsonProperty("cfg_path")
@@ -35,4 +33,13 @@ public class System {
 
     @JsonProperty("executable_path")
     private String executablePath;
+
+    @JsonProperty("rom_ext")
+    private String romExt;
+
+    @JsonProperty("flyer")
+    private String flyerPath;
+
+    @JsonProperty("marquee")
+    private String marqueePath;
 }

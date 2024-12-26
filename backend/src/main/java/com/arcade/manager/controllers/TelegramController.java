@@ -18,7 +18,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 @RestController
 @Tag(name = "Telegram Controller", description = "Operaciones Relacionadas a la Api de Telegram")
@@ -44,8 +43,9 @@ public class TelegramController {
     }
 
     @PostMapping(value = "/init")
-    public List<Map<String, String>> initSystems(@RequestParam("attractPath") String attractPath) throws IOException {
-        return ResponseEntity.ok(systemService.showCfgFiles(attractPath)).getBody();
+    @Operation(summary = "Inicializa los sistemas a partir de archivos .cfg")
+    public List<System> initSystems(@RequestParam("attractPath") String attractPath) throws IOException {
+        return ResponseEntity.ok(systemService.getSystemsFromCfgFiles(attractPath)).getBody();
     }
 
     @GetMapping("/manager/getSystemGameList/{idSystem}")

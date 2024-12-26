@@ -3,7 +3,7 @@
         <form>
             <select class="form-select" #systems (change)="getSystemGameList(systems.value)">
                 <option value="0">Selecciona una opción...</option>
-                <option *ngFor="let s of systemList" [value]="s.id">{{ s.system_label }}</option>
+                <option *ngFor="let s of systemList" [value]="s.id">{{ s.system_name }}</option>
             </select>
         </form>
     </div>
